@@ -1,5 +1,3 @@
-# I'm not sure if this is even licensable, but if it is, it's entirely free to use. Hope it's useful.
-
 import fractions
 
 def differences(ratios):
