@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Equidistant Temperer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    </head>
+</html>
+<body>
+        <h1>Equidistant Temperer</h1>
+            <form id="form">
+                <label for="intervals">List of intervals to temper together/equidistant:</label>
+                    <br />
+                <textarea id="intervals" name="intervals" rows="6" cols="10"></textarea>
+                    <br />
+                <input type="radio" id="together" name="mode" value="Together">
+                <label for="together">Temper together</label><br />
+                <input type="radio" id="equidistant" name="mode" value="Equidistant">
+                <label for="equidistant">Temper equidistant</label>
+                    <br />
+                <input type="button" value="Calculate" onclick="calculate()"/>
+            </form>
+    <script>
+function diffs(array){
+const diff_array = [];
+for (let i = 0; i < array.length - 1; i++) {
+    num = array[i+1][0] * array[i][1];
+    den = array[i+1][1] * array[i][0];
+    gcd = gcd_rec(num, den);
+    num = num / gcd;
+    den = den / gcd;
+    diff_array.push([num,den]);
+};
+return diff_array;
+};
+function gcd_rec(a, b) {
+if (b) {
+return gcd_rec(b, a % b);
+} else {
+return Math.abs(a);
+}
+}
+function sep(inp) {
+return inp.split("/").map(x => parseInt(x));
+};
+calculate = function(){
+    const intervals = document.getElementById("intervals").value.split("\n").map(sep);
+    selection = document.querySelector("input[name=mode]:checked").value;
+    switch (selection){
+        case "Together":
+            alert(diffs(intervals).join("\n"));
+            break;
+        case "Equidistant":
+            alert(diffs(diffs(intervals)).join("\n"));
+            break;
+    };
+};
+
+    </script>
+</body>
+</html>
